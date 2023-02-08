@@ -41,32 +41,13 @@
                    <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
                   <% end %>
                </tr>
-                  <% @book.book_comments.each do |book_comment| %>
-                  <tr>
-                    <td><%= image_tag book_comment.user.get_profile_image, size:"100x100" %><br>
-                        <%= link_to book_comment.user.name, user_path(@user.id) %>
-                          
-                    </td> 
-                    <td>
-                        <%= book_comment.comment %>
-                    </td>
-                    
-                    <td>
-                        <% if book_comment.user == current_user %>
-                        <%= link_to book_book_comment_path(book_comment.book,book_comment), method: :delete do %>
-                        <button class= "btn btn-info btn-sm btn-block mb-3 sign_in" > "Destroy" </button>
-                        <% end %>
-                        <% end %>
-                        
-                    </td>
-                  </tr>
-                   <% end %>  
+                 <div id="comments_area"> 
+                  <%= render 'book_comments/book_comments', book: @book %>
+                </div>
                 <tr>
-                    <td><%= form_with model:[@book, @book_comment] do |f| %>
-                <%= f.text_area :comment,rows: '5', placeholder: "コメントをここに" %>
-                <%= f.submit "送信する" %>
-                <% end %>
-                </td>
+                   <div class="new-comment">
+                    <%= render 'book_comments/form', book: @book, comment: @comment %>
+                   </div> 
                 </tr>
                </tbody>
             </table>
